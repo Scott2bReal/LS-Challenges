@@ -21,10 +21,18 @@ class BeerSong
       nums = (down_to..current)
 
       nums.reverse_each do |num|
-        output << verse(num)
+        if num == down_to
+          output << verse(num)
+        else
+          output << verse(num) + "\n"
+        end
       end
 
       output
+    end
+
+    def lyrics
+     verses(99, 0) 
     end
   end
 end
