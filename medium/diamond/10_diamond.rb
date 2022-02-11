@@ -10,5 +10,9 @@ class Diamond
       final_diamond = ''
       letters = ('A'..letter).to_a
     end
+
+    def determine_width(letter)
+      return 1 if letter == 'A'
+    end
   end
 end
