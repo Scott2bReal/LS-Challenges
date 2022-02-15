@@ -20,7 +20,6 @@ class CustomSetTest < Minitest::Test
   end
 
   def test_does_contain
-    skip
     set = CustomSet.new([1, 2, 3])
     assert_equal true, set.contains?(1)
   end

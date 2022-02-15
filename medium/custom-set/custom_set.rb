@@ -1,22 +1,27 @@
 class CustomSet
   def initialize(items=nil)
-    @items = items
+    if items
+      @items = items
+    else
+      @items = []
+    end
   end
 
   def add(item)
+    @items.push(item)
   end
 
   def empty?
-    return true unless @items
-    false
+    @items.empty?
   end
 
-  def contains?(item)
-    return true if @items&.include?(item)
-    false
+  def contains?(other_set)
+    return true if empty? && other_set.empty?
+    @items.include?(other_set)
   end
 
-  def subset?
+  def subset?(other_set)
+    contains?(other_set)
   end
 
   def disjoint?
