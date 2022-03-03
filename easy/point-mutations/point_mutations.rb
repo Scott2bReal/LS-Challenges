@@ -6,13 +6,14 @@ class DNA
   end
 
   def hamming_distance(other_strand)
-    strands = [self.strand.chars, other_strand.chars].sort_by(&:size)
-    counter = 0
+    distance = 0
+    
+    strand.chars.each_with_index do |letter, idx|
+      break if idx > other_strand.size - 1
 
-    strands[0].each_with_index do |letter, idx|
-      counter += 1 unless letter == strands[1][idx]
+      distance += 1 unless letter == other_strand[idx]
     end
 
-    counter
+    distance
   end
 end
