@@ -1,21 +1,21 @@
 class SumOfMultiples
   def initialize(*set)
-    @set = set.to_a
+    @set = set.empty? ? [3, 5] : set
   end
 
-  def self.to(input)
-    SumOfMultiples.new(3, 5).to(input)
+  def to(num)
+    numbers = (1...num).to_a
+    numbers.select { |n| multiple?(n) }.sum
   end
 
-  def to(input)
-    multiples = []
+  def self.to(num)
+    SumOfMultiples.new.to(num)
+  end
 
-    (1...input).to_a.each do |num|
-      @set.each do |set_num|
-        multiples << num if (num % set_num).zero?
-      end
-    end
-
-    multiples.uniq.sum
+  private
+  
+  def multiple?(number)
+    @set.each { |num| return true if (number % num).zero? }
+    false
   end
 end
