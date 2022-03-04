@@ -1,30 +1,32 @@
 class Robot
   @@names = []
 
-  def name
-    return @name if @name
+  attr_accessor :name
 
-    @name = set_name
+  def initialize
+    @name = generate_name
+    @@names << @name
   end
 
   def reset
-    @@names.delete(@name)
-    @name = nil
+    @@names.delete(name)
+    @name = generate_name
+    @@names << @name
   end
 
   private
 
-  def set_name
-    name = ''
+  def generate_name
+    new_name = ''
 
     loop do
-      name = ''
-      2.times { name << ('A'..'Z').to_a.sample }
-      3.times { name << ('0'..'9').to_a.sample }
-      break unless @@names.include?(name)
+      2.times { new_name << ('A'..'Z').to_a.sample }
+      3.times { new_name << ('0'..'9').to_a.sample }
+      break unless @@names.include?(new_name)
+
+      new_name = ''
     end
 
-    @@names << name
-    name
+    new_name
   end
 end
