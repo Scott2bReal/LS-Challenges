@@ -1,36 +1,34 @@
 class Scrabble
   LETTER_SCORES = {
-    1 => %w(a e i o u l n r s t),
-    2 => %w(d g),
-    3 => %w(b c m p),
-    4 => %w(f h v w y),
-    5 => %w(k),
-    8 => %w(j x),
-    10 => %(q z)
+    1 => %w(A E I O U L N R S T),
+    2 => %w(D G),
+    3 => %w(B C M P),
+    4 => %w(F H V W Y),
+    5 => %w(K),
+    8 => %w(J X),
+    10 => %w(Q Z)
   }
 
+  attr_reader :word
+
   def initialize(word)
-    @word = process_word(word)
+    @word = word&.strip&.upcase
   end
 
   def score
-    @word.chars.map { |letter| letter_score(letter) }.sum
+    score = 0
+    return score if word.nil? || word.empty?
+
+    @word.chars.each do |letter|
+      LETTER_SCORES.each do |points, letters|
+        score += points if letters.include?(letter)
+      end
+    end
+
+    score
   end
 
   def self.score(word)
     Scrabble.new(word).score
-  end
-
-  private
-
-  def letter_score(letter)
-    LETTER_SCORES.each do |score, letters|
-      return score if letters.include?(letter)
-    end
-    0
-  end
-
-  def process_word(word)
-    word ? word.downcase.strip : ''
   end
 end

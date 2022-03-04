@@ -1,15 +1,19 @@
 class Series
+  attr_reader :input
+
   def initialize(input)
-    @input = input.chars.map(&:to_i)
+    @input = input
   end
 
-  def slices(slice_size)
-    raise ArgumentError if slice_size > @input.size
+  def slices(size)
+    raise ArgumentError if size > input.length
 
-    slices = []
-    @input.each_cons(slice_size) do |slice|
-      slices << slice
+    array = []
+
+    input.chars.map(&:to_i).each_cons(size) do |slice|
+      array << slice
     end
-    slices
+
+    array
   end
 end
