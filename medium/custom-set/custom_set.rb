@@ -60,7 +60,7 @@ class CustomSet
     end
     union_set
   end
-  
+
   protected
 
   attr_accessor :items
