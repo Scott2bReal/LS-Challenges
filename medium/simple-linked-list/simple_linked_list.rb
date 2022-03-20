@@ -1,59 +1,43 @@
-class Element
-  def initialize(datum, next_element=nil)
-    @datum = datum
-    @next = next_element
-  end
-
-  attr_reader :datum
-  attr_accessor :next
-
-  def tail?
-    @next.nil?
-  end
-end
-
 class SimpleLinkedList
+  def initialize
+    @size = 0
+  end
+
   attr_accessor :head
+  attr_reader :size
 
   def empty?
-    return true if size.zero?
-    false
+    size == 0
   end
 
-  def size
-    list_size = 0
-    next_element = @head
-
-    until next_element.nil?
-      list_size += 1
-      next_element = next_element.next
-    end
-
-    list_size
-  end
-
-  def push(value)
-    element = Element.new(value, @head)
-    self.head = element
-  end
-
-  def pop
-    popped = @head
-    self.head = head.next
-    popped.datum
+  def push(input)
+    self.size += 1
+    self.head = Element.new(input, @head)
+    self
   end
 
   def peek
     @head&.datum
   end
 
+  def pop
+    self.size -= 1
+    old_head = head
+    self.head = head.next
+    old_head.datum
+  end
+
   def to_a
     array = []
-    next_element = head
+    return array if empty?
 
-    until next_element.nil?
-      array << next_element.datum
-      next_element = next_element.next
+    current_element = head
+
+    loop do
+      array << current_element.datum
+      break if current_element.tail?
+
+      current_element = current_element.next
     end
 
     array
@@ -64,8 +48,27 @@ class SimpleLinkedList
   end
 
   def self.from_a(array)
-    list = SimpleLinkedList.new
-    array&.reverse_each { |item| list.push(item) }
-    list
+    return new unless array
+    new_list = new
+    array.reverse_each { |datum| new_list.push(datum) }
+    new_list
+  end
+
+  private
+
+  attr_writer :size
+end
+
+class Element
+  def initialize(datum, next_element=nil)
+    @datum = datum
+    @next = next_element
+  end
+
+  attr_reader :datum, :next
+
+  def tail?
+    return true unless @next
+    false
   end
 end
